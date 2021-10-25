@@ -1,7 +1,7 @@
-package com.discordbot.babybot.commands;
+package com.discordbot.babybot.commands.misc_commands;
 
-import com.discordbot.babybot.command_logic.Command;
-import com.discordbot.babybot.command_logic.ICommand;
+import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.ICommand;
 import net.dv8tion.jda.api.JDA;
 
 public class PingCommand implements ICommand {
@@ -10,11 +10,8 @@ public class PingCommand implements ICommand {
         JDA jda = command.getJDA();
         jda.getRestPing().queue(
                 (ping) -> command.getChannel()
-                        .sendMessageFormat(
-                                "```\n" +
-                                        "REST ping: %sms\n" +
-                                        "GATEWAY ping: %sms" +
-                                        "\n```",
+                        .sendMessageFormat("Your *``REST``* ping: %sms\n" +
+                                        "Your *``GATEWAY``* ping: %sms",
                                 ping, jda.getGatewayPing()).queue()
         );
     }

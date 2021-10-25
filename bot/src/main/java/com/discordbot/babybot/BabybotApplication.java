@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class BabybotApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(BabybotApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(BabybotApplication.class, args);
+    }
 }

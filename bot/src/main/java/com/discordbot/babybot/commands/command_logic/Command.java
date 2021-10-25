@@ -1,4 +1,4 @@
-package com.discordbot.babybot.command_logic;
+package com.discordbot.babybot.commands.command_logic;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

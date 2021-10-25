@@ -1,4 +1,4 @@
-package com.discordbot.babybot.command_logic;
+package com.discordbot.babybot.commands.command_logic;
 import java.util.List;
 
 public interface ICommand {

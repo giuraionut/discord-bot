@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PlayerManager {
@@ -22,7 +23,6 @@ public class PlayerManager {
     public PlayerManager() {
         this.musicManagers = new HashMap<>();
         this.audioPlayerManager = new DefaultAudioPlayerManager();
-
         AudioSourceManagers.registerRemoteSources(this.audioPlayerManager);
         AudioSourceManagers.registerLocalSource(this.audioPlayerManager);
     }
@@ -41,12 +41,39 @@ public class PlayerManager {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
                 guildMusicManager.trackScheduler.addTrackToQueue(audioTrack);
-                channel.sendMessage("Adding to playlist: ").append(audioTrack.getInfo().title).append(" by ").append(audioTrack.getInfo().author).queue();
+                long duration = audioTrack.getDuration();
+
+                channel.sendMessage("Adding to playlist: ")
+                        .append(audioTrack.getInfo().title)
+                        .append(" by ")
+                        .append(audioTrack.getInfo().author).append(", length: ")
+                        .append(MilliToTime.convert(duration)).queue();
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist audioPlaylist) {
+                List<AudioTrack> tracks = audioPlaylist.getTracks();
+                if (audioPlaylist.isSearchResult()) {
+                    guildMusicManager.trackScheduler.addTrackToQueue(tracks.get(0));
+                    long duration = tracks.get(0).getDuration();
 
+                    channel.sendMessage("Adding to playlist: \n")
+                            .append("**`").append(tracks.get(0).getInfo().title).append("`**")
+                            .append(" by ")
+                            .append("**`").append(tracks.get(0).getInfo().author).append("`**;\n")
+                            .append("Length: ")
+                            .append("**`").append(MilliToTime.convert(duration)).append("`**.").queue();
+                } else {
+                    tracks.forEach(guildMusicManager.trackScheduler::addTrackToQueue);
+                    Long totalDuration = tracks.stream().map(AudioTrack::getDuration).reduce(Long::sum).orElse(0L);
+                    channel.sendMessage("Adding to playlist: \n")
+                            .append("**`").append(audioPlaylist.getName()).append("`**")
+                            .append(" with ")
+                            .append("**`").append(String.valueOf(tracks.size())).append("`**")
+                            .append(" tracks;\n")
+                            .append("Length: ")
+                            .append("**`").append(MilliToTime.convert(totalDuration)).append("`**.").queue();
+                }
             }
 
             @Override

@@ -1,7 +1,7 @@
-package com.discordbot.babybot.commands;
+package com.discordbot.babybot.commands.profile_commands;
 
-import com.discordbot.babybot.command_logic.Command;
-import com.discordbot.babybot.command_logic.ICommand;
+import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.ICommand;
 import com.discordbot.babybot.profile_card.ProfileCard;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -17,16 +17,23 @@ public class CardCommand implements ICommand {
         ProfileCard profileCard = new ProfileCard();
         User author = command.getAuthor();
         Guild guild = command.getGuild();
-        System.out.println(author);
-        System.out.println(guild);
+
         TextChannel channel = command.getChannel();
-        File profileCardImage = profileCard.draw(500, author, guild);
+        int width;
+        try {
+            String arg = command.getArgs().get(0);
+            width = Integer.parseInt(arg);
+        }
+        catch (IndexOutOfBoundsException ex)
+        {
+            width = 500;
+        }
+
+        File profileCardImage = profileCard.draw(width, author, guild);
         if (profileCardImage != null) {
             channel.sendFile(profileCardImage).queue();
         } else {
-            channel.sendMessage("```\n" +
-                    "Sorry, I can't generate you a card :(" +
-                    "\n```").queue();
+            channel.sendMessage("Sorry, I can't generate you a card right now because I messed up something :(").queue();
         }
     }
 

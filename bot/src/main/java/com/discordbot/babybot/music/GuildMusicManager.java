@@ -6,7 +6,6 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 public class GuildMusicManager {
     public final AudioPlayer audioPlayer;
     public final TrackScheduler trackScheduler;
-
     private final AudioPlayerHandler playerHandler;
 
     public GuildMusicManager(AudioPlayerManager audioPlayerManager) {

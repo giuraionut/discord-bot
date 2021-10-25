@@ -1,6 +1,8 @@
 package com.discordbot.babybot.events;
 
-import com.discordbot.babybot.command_logic.CommandsCollection;
+import com.discordbot.babybot.commands.command_logic.CommandsCollection;
+import com.discordbot.babybot.database.utils.CollectData;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -9,13 +11,21 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class EventListener extends ListenerAdapter {
     private static final Logger log = LoggerFactory.getLogger(EventListener.class);
     private final CommandsCollection fromCollection = new CommandsCollection();
+    private final CollectData collectData = new CollectData();
 
     @Override
     public void onReady(@NotNull ReadyEvent event) {
         log.info("{} is online", event.getJDA().getSelfUser());
+        List<Guild> guilds = event.getJDA().getGuilds();
+
+        new Thread(() -> {
+            collectData.collect(guilds);
+        }).start();
     }
 
     @Override
@@ -31,6 +41,5 @@ public class EventListener extends ListenerAdapter {
         if (raw.startsWith(prefix)) {
             fromCollection.handle(event);
         }
-
     }
 }

@@ -32,6 +32,7 @@ public class ProfileCard {
             int avatarPos = (cardHeight - avatarSize) / 2;
             int fontSize = cardHeight / 10;
             int textPosX = (int) (cardWidth * 1.4);
+            int rolePosX = (int) (cardWidth * 1.7); //1.4
             int maxWidth = (cardWidth / 2);
 
             Color cardColor = null;
@@ -61,12 +62,12 @@ public class ProfileCard {
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 
-            drawCard(0, 0, cardWidth, cardHeight, cardColor);
+            drawRectangle(0, 0, cardWidth, cardHeight, cardColor); //the card
             if (avatarImage != null) {
                 drawAvatar(avatarPos, avatarPos, avatarSize, avatarSize, avatarImage);
             }
             if (roleName != null) {
-                text(textPosX, Color.white, "ROLE: " + roleName, fontSize, maxWidth);
+                text(rolePosX, Color.white, "ROLE: " + roleName, fontSize, maxWidth);
             }
             text(textPosX, Color.white, "USERNAME: " + username, fontSize, maxWidth);
             if (nickname != null) {
@@ -98,6 +99,7 @@ public class ProfileCard {
         FontMetrics metrics = g.getFontMetrics(font);
         int y = metrics.getHeight() * textCounter;
 
+
         if (metrics.stringWidth(text) > maxWidth) {
             List<String> array = new ArrayList<>();
             array.add(text.substring(0, text.indexOf(" ", text.length() / 2)));
@@ -121,10 +123,10 @@ public class ProfileCard {
         g.drawLine(x1, y1, x2, y2);
     }
 
-    public static void drawCard(int x, int y, int width, int height, Color color) {
+    public static void drawRectangle(int x, int y, int width, int height, Color color) {
         g.setColor(color);
-        g.drawRoundRect(x, y, width, height, 50, 50);
-        g.fillRoundRect(x, y, width, height, 50, 50);
+        g.drawRoundRect(x, y, width, height, width / 10, width / 10);
+        g.fillRoundRect(x, y, width, height, width / 10, width / 10);
     }
 
     public static void drawAvatar(int x, int y, int width, int height, BufferedImage image) {
