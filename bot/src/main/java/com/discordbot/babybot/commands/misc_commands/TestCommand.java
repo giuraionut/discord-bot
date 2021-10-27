@@ -7,7 +7,6 @@ public class TestCommand implements ICommand {
 
     @Override
     public void handle(Command command) {
-
     }
 
     @Override
