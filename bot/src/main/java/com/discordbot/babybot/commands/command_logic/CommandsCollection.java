@@ -20,18 +20,24 @@ public class CommandsCollection {
     private final List<ICommand> commandList = new ArrayList<>();
 
     public CommandsCollection() {
-        addCommand(new PingCommand());
-        addCommand(new CardCommand());
+        //general commands
         addCommand(new HelpCommand(this));
+        addCommand(new PingCommand());
+
+        addCommand(new CardCommand());
+        //music commands
         addCommand(new PlayTrackCommand());
         addCommand(new PauseTrackCommand());
         addCommand(new ResumeTrackCommand());
         addCommand(new StopTrackCommand());
         addCommand(new SkipTrackCommand());
         addCommand(new CurrentTrackCommand());
-        addCommand(new TestCommand());
+        //math commands
         addCommand(new GcdLcmCommand());
         addCommand(new FibonacciCommand());
+
+        addCommand(new TestCommand());
+
     }
 
     private void addCommand(ICommand command) {

@@ -62,6 +62,11 @@ public class PlayTrackCommand implements ICommand {
     }
 
     @Override
+    public String getCategory() {
+        return "music";
+    }
+
+    @Override
     public String getHelp() {
         return "```\n" +
                 "This command will play a track\n" +

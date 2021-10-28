@@ -55,6 +55,11 @@ public class StopTrackCommand implements ICommand {
     }
 
     @Override
+    public String getCategory() {
+        return "music";
+    }
+
+    @Override
     public String getHelp() {
         return "```\n" +
                 "This command will stop any track and will also clear the playlist\n" +

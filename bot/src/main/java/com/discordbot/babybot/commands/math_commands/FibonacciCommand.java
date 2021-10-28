@@ -14,9 +14,8 @@ public class FibonacciCommand implements ICommand {
     public void handle(Command command) {
         TextChannel channel = command.getChannel();
 
-        String arg = command.getArgs().get(0);
-
         try {
+            String arg = command.getArgs().get(0);
             int limit = Integer.parseInt(arg);
             if (limit > 20) {
                 limit = 20;
@@ -27,8 +26,8 @@ public class FibonacciCommand implements ICommand {
                     .map(s -> s[0]).collect(Collectors.toList());
             channel.sendMessageFormat("First **`%s`** numbers of fibonacci sequence are:\n" +
                     " **`%s`**.", limit, fibonacci).queue();
-        } catch (NumberFormatException ex) {
-            channel.sendMessage("Sorry, the argument must be a number.").queue();
+        } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+            channel.sendMessage("Sorry, the argument must be a **`number`**.").queue();
         }
 
 
@@ -40,6 +39,11 @@ public class FibonacciCommand implements ICommand {
     }
 
     @Override
+    public String getCategory() {
+        return "math";
+    }
+
+    @Override
     public List<String> getAliases() {
         List<String> aliases = new ArrayList<>();
         aliases.add("fib");
@@ -48,6 +52,9 @@ public class FibonacciCommand implements ICommand {
 
     @Override
     public String getHelp() {
-        return null;
+        return "```\n" +
+                "This command calculates first n numbers from fibonacci sequence\n" +
+                "Use it as !fibonacci n, where n is a number higher than 0." +
+                "\n```";
     }
 }

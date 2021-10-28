@@ -2,6 +2,7 @@ package com.discordbot.babybot.events;
 
 import com.discordbot.babybot.commands.command_logic.CommandsCollection;
 import com.discordbot.babybot.database.utils.CollectData;
+import lombok.SneakyThrows;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -28,6 +29,7 @@ public class EventListener extends ListenerAdapter {
         }).start();
     }
 
+    @SneakyThrows
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         User user = event.getAuthor();
@@ -37,9 +39,10 @@ public class EventListener extends ListenerAdapter {
         }
         String prefix = "!";
         String raw = event.getMessage().getContentRaw();
-
         if (raw.startsWith(prefix)) {
             fromCollection.handle(event);
+//            new Thread(() ->{
+//            }){{start();}}.join();
         }
     }
 }

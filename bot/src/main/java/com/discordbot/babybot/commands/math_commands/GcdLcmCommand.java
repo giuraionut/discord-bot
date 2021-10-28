@@ -14,17 +14,20 @@ public class GcdLcmCommand implements ICommand {
     public void handle(Command command) {
         TextChannel channel = command.getChannel();
         List<String> commandArgs = command.getArgs();
-        try {
-            List<Integer> integerArgs = commandArgs.stream().map(Integer::parseInt).sorted(Integer::compare).collect(Collectors.toList());
-            int product = integerArgs.stream().reduce(1, (a, b) -> a * b);
-            Integer cmmdc = integerArgs.stream().reduce(this::gcd).orElse(1);
-            channel.sendMessageFormat("GCD for **`%s`** is: **`%s`**.\n" +
-                    "LCM for **`%s`** is: **`%s`**.", integerArgs, cmmdc, integerArgs, product/cmmdc).queue();
+        if (commandArgs.size() != 0) {
+            try {
+                List<Integer> integerArgs = commandArgs.stream().map(Integer::parseInt).sorted(Integer::compare).collect(Collectors.toList());
+                int product = integerArgs.stream().reduce(1, (a, b) -> a * b);
+                Integer cmmdc = integerArgs.stream().reduce(this::gcd).orElse(1);
+                channel.sendMessageFormat("GCD for **`%s`** is: **`%s`**.\n" +
+                        "LCM for **`%s`** is: **`%s`**.", integerArgs, cmmdc, integerArgs, product / cmmdc).queue();
 
-        } catch (NumberFormatException ex) {
-            channel.sendMessageFormat("Sorry, but you can't find cmmdc with any other characters than **`numbers`**").queue();
+            } catch (NumberFormatException ex) {
+                channel.sendMessageFormat("Sorry, but you can't find cmmdc with any other characters than **`numbers`**").queue();
+            }
+        } else {
+            channel.sendMessage("This command needs some arguments, for example: **`8 4 9 2**`").queue();
         }
-
     }
 
     int gcd(Integer a, Integer b) {
@@ -41,6 +44,11 @@ public class GcdLcmCommand implements ICommand {
     }
 
     @Override
+    public String getCategory() {
+        return "math";
+    }
+
+    @Override
     public List<String> getAliases() {
         List<String> aliases = new ArrayList<>();
         aliases.add("lcm");
@@ -51,6 +59,9 @@ public class GcdLcmCommand implements ICommand {
 
     @Override
     public String getHelp() {
-        return null;
+        return "```\n" +
+                "This command calculates GCD and LCM\n" +
+                "Use it as !gcd args, where args are numbers like 5 8 4, etc" +
+                "\n```";
     }
 }

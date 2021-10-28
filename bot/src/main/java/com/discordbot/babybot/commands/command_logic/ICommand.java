@@ -8,6 +8,10 @@ public interface ICommand {
 
     String getHelp();
 
+    default String getCategory() {
+        return "";
+    }
+
     default List<String> getAliases() {
         return List.of();
     }

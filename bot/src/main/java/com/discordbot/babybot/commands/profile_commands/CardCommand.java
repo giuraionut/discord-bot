@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +24,25 @@ public class CardCommand implements ICommand {
         try {
             String arg = command.getArgs().get(0);
             width = Integer.parseInt(arg);
-        }
-        catch (IndexOutOfBoundsException ex)
-        {
+            if (width > 1000) {
+                width = 1000;
+                channel.sendMessageFormat("By setting the width to **`%s`**, the quality of your profile picture will decrease by a lot.\n" +
+                        "I limited your card size to **`1000`**", arg).queue();
+            }
+        } catch (IndexOutOfBoundsException ex) {
             width = 500;
         }
-
-        File profileCardImage = profileCard.draw(width, author, guild);
-        if (profileCardImage != null) {
-            channel.sendFile(profileCardImage).queue();
-        } else {
+        try {
+            File profileCardImage = profileCard.draw(width, author, guild);
+            if (profileCardImage != null) {
+                channel.sendFile(profileCardImage).queue();
+            } else {
+                channel.sendMessage("Sorry, I can't generate you a card right now because I messed up something :(").queue();
+            }
+        } catch (IOException ex) {
             channel.sendMessage("Sorry, I can't generate you a card right now because I messed up something :(").queue();
         }
+
     }
 
     @Override
@@ -48,6 +56,11 @@ public class CardCommand implements ICommand {
                 "This command generates a card with your profile\n" +
                 "Use it as !card" +
                 "\n```";
+    }
+
+    @Override
+    public String getCategory() {
+        return "profile";
     }
 
     @Override

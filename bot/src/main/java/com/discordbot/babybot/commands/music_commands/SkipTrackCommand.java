@@ -60,6 +60,11 @@ public class SkipTrackCommand implements ICommand {
     }
 
     @Override
+    public String getCategory() {
+        return "music";
+    }
+
+    @Override
     public String getHelp() {
         return "```\n" +
                 "This command will stop the current track and will play the next one\n" +

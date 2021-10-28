@@ -21,6 +21,12 @@ public class PingCommand implements ICommand {
         return "ping";
     }
 
+
+    @Override
+    public String getCategory() {
+        return "general";
+    }
+
     @Override
     public String getHelp() {
         return "```\n" +

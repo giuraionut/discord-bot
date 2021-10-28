@@ -3,8 +3,8 @@ package com.discordbot.babybot.commands.music_commands;
 import com.discordbot.babybot.commands.command_logic.Command;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 import com.discordbot.babybot.music.GuildMusicManager;
-import com.discordbot.babybot.music.MilliToTime;
 import com.discordbot.babybot.music.PlayerManager;
+import com.discordbot.babybot.utils.Utils;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -47,10 +47,11 @@ public class ResumeTrackCommand implements ICommand {
             return;
         }
         guildMusicManager.trackScheduler.player.setPaused(false);
-        String duration = MilliToTime.convert(guildMusicManager.trackScheduler.player.getPlayingTrack().getDuration());
-        String position = MilliToTime.convert(guildMusicManager.trackScheduler.player.getPlayingTrack().getPosition());
-        String remaining = MilliToTime.convert(guildMusicManager.trackScheduler.player.getPlayingTrack().getDuration() -
-                guildMusicManager.trackScheduler.player.getPlayingTrack().getPosition());
+        long duration = guildMusicManager.trackScheduler.player.getPlayingTrack().getDuration();
+        long longPosition = guildMusicManager.trackScheduler.player.getPlayingTrack().getPosition();
+        String position = Utils.milliToTime(longPosition);
+        String remaining = Utils.milliToTime(duration -
+                longPosition);
         textChannel.sendMessage("Ok, I resumed the current track at **`" + position + "`**.\n" +
                 "If you would like to pause it type **`!pause`**.\n" +
                 "Time left until track ends: **`" + remaining + "`**.").queue();
@@ -59,6 +60,11 @@ public class ResumeTrackCommand implements ICommand {
     @Override
     public String getName() {
         return "resume";
+    }
+
+    @Override
+    public String getCategory() {
+        return "music";
     }
 
     @Override

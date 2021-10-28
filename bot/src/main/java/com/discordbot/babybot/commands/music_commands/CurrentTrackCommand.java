@@ -3,8 +3,8 @@ package com.discordbot.babybot.commands.music_commands;
 import com.discordbot.babybot.commands.command_logic.Command;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 import com.discordbot.babybot.music.GuildMusicManager;
-import com.discordbot.babybot.music.MilliToTime;
 import com.discordbot.babybot.music.PlayerManager;
+import com.discordbot.babybot.utils.Utils;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
@@ -49,13 +49,19 @@ public class CurrentTrackCommand implements ICommand {
         textChannel.sendMessage("I'm currently playing:\n" +
                 "**`" + playingTrack.getInfo().title + "`** by **`" + playingTrack.getInfo().author + "`**\n")
                 .append("Time left: ")
-                .append("**`").append(MilliToTime.convert(duration-position)).append("`**.").queue();
+                .append("**`").append(Utils.milliToTime(duration-position)).append("`**.").queue();
     }
 
     @Override
     public String getName() {
         return "trackinfo";
     }
+
+    @Override
+    public String getCategory() {
+        return "music";
+    }
+
 
     @Override
     public String getHelp() {

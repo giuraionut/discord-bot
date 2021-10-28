@@ -1,5 +1,6 @@
 package com.discordbot.babybot.music;
 
+import com.discordbot.babybot.utils.Utils;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -47,7 +48,7 @@ public class PlayerManager {
                         .append(audioTrack.getInfo().title)
                         .append(" by ")
                         .append(audioTrack.getInfo().author).append(", length: ")
-                        .append(MilliToTime.convert(duration)).queue();
+                        .append(Utils.milliToTime(duration)).queue();
             }
 
             @Override
@@ -62,7 +63,7 @@ public class PlayerManager {
                             .append(" by ")
                             .append("**`").append(tracks.get(0).getInfo().author).append("`**;\n")
                             .append("Length: ")
-                            .append("**`").append(MilliToTime.convert(duration)).append("`**.").queue();
+                            .append("**`").append(Utils.milliToTime(duration)).append("`**.").queue();
                 } else {
                     tracks.forEach(guildMusicManager.trackScheduler::addTrackToQueue);
                     Long totalDuration = tracks.stream().map(AudioTrack::getDuration).reduce(Long::sum).orElse(0L);
@@ -72,7 +73,7 @@ public class PlayerManager {
                             .append("**`").append(String.valueOf(tracks.size())).append("`**")
                             .append(" tracks;\n")
                             .append("Length: ")
-                            .append("**`").append(MilliToTime.convert(totalDuration)).append("`**.").queue();
+                            .append("**`").append(Utils.milliToTime(totalDuration)).append("`**.").queue();
                 }
             }
 
