@@ -23,9 +23,6 @@ public class Node {
     }
 
     public void setHead(String head) {
-        if (head.isBlank()) {
-            head = "0.0";
-        }
         this.head = head;
     }
 
@@ -50,7 +47,7 @@ public class Node {
 
     public static Node parse(String string) {
         Node tree = new Node();
-        List<String> operations = new ArrayList<>(Arrays.asList("+", "-", "*", "/", "^")); //operations
+        List<String> operations = new ArrayList<>(Arrays.asList("+", "-", "*", "/", "^", "sqrt")); //operations
         if (operations.stream().anyMatch(string::contains)) { // if we have an operation means we have to parse the string
             // check to see what operation do we have in the current string, also we have to respect the order of operations.
             String operation = operations.stream().filter(string::contains).findFirst().get(); //get first match to respect the order of operations
@@ -59,7 +56,11 @@ public class Node {
             if (operation.equals("^"))
                 operation = "\\^";
             final List<String> strings = Arrays.asList(string.split("[" + operation + "]")); //at this point we are done with one operation
-            strings.forEach(s -> tree.addChildren(parse(s))); // parse each substring again, these substrings can't contain the operation that already occurred
+//            strings.forEach(s -> tree.addChildren(parse(s))); // parse each substring again, these substrings can't contain the operation that already occurred
+            for (String s : strings) {
+                if (!s.isEmpty())
+                    tree.addChildren(parse(s));
+            }
             return tree;
         }
         tree.setHead(string); // if we don't have any operation, we got a number, so we return it
@@ -75,7 +76,7 @@ public class Node {
     }
 
     private static boolean isOperation(Node node) {
-        String operations = "+-^/*";
+        String operations = "+-^/*sqrt";
         return operations.contains(node.getHead());
     }
 
@@ -93,6 +94,10 @@ public class Node {
         }
         node.childrens = new ArrayList<>();
         switch (node.getHead()) {
+            case "sqrt" -> {
+                node.setHead(String.valueOf(Math.sqrt(values.get(0))));
+                return node;
+            }
             case "^" -> {
                 double result = values.get(0);
                 values.remove(0);
@@ -118,9 +123,13 @@ public class Node {
             }
             case "-" -> {
                 double result = values.get(0);
+                final int noOfValues = values.size();
                 values.remove(0);
                 for (Double i : values) {
                     result = result - i;
+                }
+                if (noOfValues == 1) {
+                    result = -result;
                 }
                 node.setHead(String.valueOf(result));
                 return node;

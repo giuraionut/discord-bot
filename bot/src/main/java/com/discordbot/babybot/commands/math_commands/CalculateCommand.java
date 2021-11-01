@@ -17,7 +17,7 @@ public class CalculateCommand implements ICommand {
         List<String> commandArgs = command.getArgs();
         final String commandString = commandArgs.toString();
         final String equation = Utils.formatCommandArgsString(commandString);
-        final String regex = "[-.+/*0-9^]+";
+        final String regex = "[-.+/*0-9^(sqrt)]+";
         if (!equation.matches(regex)) {
             channel.sendMessage("Sorry, but the expression is wrong.\n" +
                     "Use **`!help calculate`** for more details on how to use this command.").queue();
@@ -37,8 +37,8 @@ public class CalculateCommand implements ICommand {
     @Override
     public String getHelp() {
         return "```\n" +
-                "Calculates basic arithmetic expressions. Currently it supports the following operations: +, -, *, /, ^\n" +
-                "Use it as !calculate expression, for eg: -10/2-3+4*5^2." +
+                "Calculates basic arithmetic expressions. Currently it supports the following operations: +, -, *, /, ^, sqrt\n" +
+                "Use it as !calculate expression, for eg: -10/2-3+4*5^2+sqrt9." +
                 "\n```";
     }
 
