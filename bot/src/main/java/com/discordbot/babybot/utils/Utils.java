@@ -12,9 +12,16 @@ public class Utils {
                         - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliseconds))
         );
     }
-    public static Color randomColor()
-    {
+
+    public static Color randomColor() {
         return new Color((int) (new Random().nextDouble() * 16777216)); //random number * 24 bit  true color (2^24) colors
+    }
+
+    public static String formatCommandArgsString(String string) {
+        return string
+                .replace("[", "")
+                .replace("]", "")
+                .replace(",", "");
     }
 
 }

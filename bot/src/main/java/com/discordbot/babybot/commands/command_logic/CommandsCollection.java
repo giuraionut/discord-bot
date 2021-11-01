@@ -1,7 +1,9 @@
 package com.discordbot.babybot.commands.command_logic;
 
+import com.discordbot.babybot.commands.math_commands.CalculateCommand;
 import com.discordbot.babybot.commands.math_commands.FibonacciCommand;
 import com.discordbot.babybot.commands.math_commands.GcdLcmCommand;
+import com.discordbot.babybot.commands.math_commands.LongestSubstringCommand;
 import com.discordbot.babybot.commands.misc_commands.HelpCommand;
 import com.discordbot.babybot.commands.misc_commands.PingCommand;
 import com.discordbot.babybot.commands.misc_commands.TestCommand;
@@ -35,7 +37,8 @@ public class CommandsCollection {
         //math commands
         addCommand(new GcdLcmCommand());
         addCommand(new FibonacciCommand());
-
+        addCommand(new LongestSubstringCommand());
+        addCommand(new CalculateCommand());
         addCommand(new TestCommand());
 
     }
