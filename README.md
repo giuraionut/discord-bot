@@ -9,7 +9,7 @@ Discord bot made with [JDA](https://github.com/DV8FromTheWorld/JDA), Spring and 
 * `Persists` all the guilds that he joins ( all members from each guild too ) into a **MongoDB** database.
 
 * Help command is `organized per categories`.
-![help_command image](help_command.png)
+![help_command image](https://github.com/giuraionut/discord-bot/blob/main/github_resources/help_command.png)
 ---
 ### Math
 * Calculates `Fibonacci sequence` for given N
