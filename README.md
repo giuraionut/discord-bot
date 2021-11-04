@@ -13,4 +13,10 @@ Discord bot made with JDA and Spring and MongoDB database.
 * Can parse and solve simple equations
 
 ### Arithmetic expression parser
-* Can parse and solve simple expressions like : `2+3*4-2^3/sqrt9`
+* Can parse and solve simple expressions with the following operations:
+    * +
+    * -
+    * /
+    * *
+    * sqrt
+    * ^
