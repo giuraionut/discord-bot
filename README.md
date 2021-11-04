@@ -41,7 +41,7 @@ Sol:
 47.0
 ```
 On the lowest levels there are operations that must be solved first, because to solve the tree we start from bottom and work our way up.
-1.We check if a node is a number or operation. 
-2.If it is operation we check if all his childs are numbers. 
-3.If all his childs are numbers we solve the node and replace it with the result. 
-4.If one child is an operation we go deeper and check again.
+* We check if a node is a number or operation. 
+* If it is operation we check if all his childs are numbers. 
+* If all his childs are numbers we solve the node and replace it with the result. 
+* If one child is an operation we go deeper and check again.
