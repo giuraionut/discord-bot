@@ -17,11 +17,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ import java.util.Map;
 public class ProfileCard {
     static Graphics2D g;
 
-    public File draw(int cardWidth, User user, Guild guild) throws IOException {
+    public InputStream draw(int cardWidth, User user, Guild guild) throws IOException {
 
         Member member = guild.getMember(user);
         String username = member.getUser().getName();
@@ -88,7 +87,9 @@ public class ProfileCard {
 
         drawAvatar(padding / 2, (cardHeight - avatarSize) / 2, avatarSize, avatarImage);
 
-        return cardToInputStream(profileCard);
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(profileCard, "png", os);
+        return new ByteArrayInputStream(os.toByteArray());
     }
 
     public static void drawInfo(HashMap<String, String> info, Font font, int cardWidth, int cardHeight, int padding, Color color) {
@@ -153,16 +154,6 @@ public class ProfileCard {
         MatOfByte mob = new MatOfByte();
         Imgcodecs.imencode(".jpg", matrix, mob);
         return ImageIO.read(new ByteArrayInputStream(mob.toArray()));
-    }
-
-    public File cardToInputStream(BufferedImage image) {
-        try {
-            File outputFile = new File("card.png");
-            ImageIO.write(image, "png", outputFile);
-            return outputFile;
-        } catch (IOException ex) {
-            return null;
-        }
     }
 
     public static void drawRectangle(int x, int y, int width, int height, Color color, BufferedImage image) {

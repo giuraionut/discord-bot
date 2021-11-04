@@ -7,8 +7,8 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +33,9 @@ public class CardCommand implements ICommand {
             width = 500;
         }
         try {
-            File profileCardImage = profileCard.draw(width, author, guild);
+            InputStream profileCardImage = profileCard.draw(width, author, guild);
             if (profileCardImage != null) {
-                channel.sendFile(profileCardImage).queue();
+                channel.sendFile(profileCardImage, author.getName() + "_card.png").queue();
             } else {
                 channel.sendMessage("Sorry, I can't generate you a card right now because I messed up something :(").queue();
             }
