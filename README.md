@@ -14,9 +14,9 @@ Discord bot made with JDA and Spring and MongoDB database.
 
 ### Arithmetic expression parser
 * Can parse and solve simple expressions with the following operations:
-    * +
-    * -
-    * /
-    * *
-    * sqrt
-    * ^
+    * addition
+    * subtraction
+    * division
+    * multiplication
+    * square root
+    * power
