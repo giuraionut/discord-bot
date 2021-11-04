@@ -13,11 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.security.auth.login.LoginException;
 
 @Configuration
+@PropertySource("bot.properties")
 public class BotConfiguration {
+
 
     @Value("${token}")
     private String TOKEN;
