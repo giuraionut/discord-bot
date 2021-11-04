@@ -20,3 +20,23 @@ Discord bot made with JDA and Spring and MongoDB database.
     * multiplication
     * square root
     * power
+* The expression is parsed into a tree structure:
+```
+12*3+15/3-sqrt9+3^2
++
+├── *
+│   ├── 12
+│   └── 3
+├── -
+│   ├── /
+│   │   ├── 15
+│   │   └── 3
+│   └── sqrt
+│       └── 9
+└── ^
+    ├── 3
+    └── 2
+
+Sol:
+47.0
+```
