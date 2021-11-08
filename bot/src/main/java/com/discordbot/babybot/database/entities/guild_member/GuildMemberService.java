@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GuildMemberService {
-
     @Autowired
     private GuildMemberRepository guildMemberRepository;
 

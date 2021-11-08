@@ -21,7 +21,6 @@ import javax.security.auth.login.LoginException;
 @PropertySource("bot.properties")
 public class BotConfiguration {
 
-
     @Value("${token}")
     private String TOKEN;
     private static final Logger log = LoggerFactory.getLogger(BotConfiguration.class);

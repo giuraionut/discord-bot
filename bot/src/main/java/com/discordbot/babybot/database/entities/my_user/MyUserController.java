@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "user")
 @AllArgsConstructor
 public class MyUserController {
-
     @Autowired
     private final MyUserService myUserService;
 

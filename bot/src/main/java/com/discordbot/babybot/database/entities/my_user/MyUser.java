@@ -1,40 +1,26 @@
 package com.discordbot.babybot.database.entities.my_user;
 
 
+import com.discordbot.babybot.reddit.reddit_configuration.RedditInfoAPI;
+import com.discordbot.babybot.reddit.reddit_configuration.RedditLoginInfo;
+import lombok.Data;
 import net.dv8tion.jda.api.entities.User;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
 @Document(collection = "users")
 public class MyUser {
     @Id
     private String id;
+
     private String username;
+
     private String avatarUrl;
 
-    public String getId() {
-        return id;
-    }
+    private RedditLoginInfo redditLoginInfo;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
+    private RedditInfoAPI redditInfoAPI;
 
     public static MyUser convert(User user) {
         MyUser myUser = new MyUser();
@@ -42,5 +28,14 @@ public class MyUser {
         myUser.setAvatarUrl(user.getAvatarUrl());
         myUser.setId(user.getId());
         return myUser;
+    }
+
+    @Override
+    public String toString() {
+        return "MyUser{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                '}';
     }
 }

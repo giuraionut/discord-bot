@@ -9,6 +9,7 @@ import java.util.List;
 public class GuildMember {
     @Id
     private GuildMemberId id;
+
     private List<String> roles;
 
     public GuildMemberId getId() {

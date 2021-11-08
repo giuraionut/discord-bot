@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-
 public class CollectData {
     private final SelfHttpReq selfHttpReq = new SelfHttpReq();
     private final Logger log = LoggerFactory.getLogger(CollectData.class);
@@ -38,8 +37,9 @@ public class CollectData {
                 myUser.setUsername(member.getUser().getName());
                 myUser.setId(member.getUser().getId());
                 myUser.setAvatarUrl(member.getUser().getAvatarUrl());
-                selfHttpReq.post("user", myUser);
-
+                final MyUser foundUser = (MyUser) selfHttpReq.get("user/", myUser.getId());
+                if (foundUser == null)
+                    selfHttpReq.post("user", myUser);
                 GuildMember guildMember = new GuildMember();
                 GuildMemberId guildMemberId = new GuildMemberId();
                 guildMemberId.setMyGuild(myGuild);
@@ -48,7 +48,9 @@ public class CollectData {
                 List<Role> roles = member.getRoles();
                 List<String> rolesNames = roles.stream().map(Role::getName).collect(Collectors.toList());
                 guildMember.setRoles(rolesNames);
-                selfHttpReq.post("guildMember", guildMember);
+                final GuildMember foundGuildMember = (GuildMember) selfHttpReq.get("guildMember/", myUser.getId() + "/" + myGuild.getId());
+                if (foundGuildMember == null)
+                    selfHttpReq.post("guildMember", guildMember);
             }
         }
         log.info("Data collection ended");

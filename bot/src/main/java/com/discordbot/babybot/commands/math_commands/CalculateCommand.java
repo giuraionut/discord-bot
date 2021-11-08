@@ -1,6 +1,6 @@
 package com.discordbot.babybot.commands.math_commands;
 
-import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.GuildCommand;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 import com.discordbot.babybot.math.Node;
 import com.discordbot.babybot.utils.Utils;
@@ -11,16 +11,16 @@ import java.util.List;
 
 public class CalculateCommand implements ICommand {
     @Override
-    public void handle(Command command) {
-        final TextChannel channel = command.getChannel();
+    public void handle(GuildCommand guildCommand) {
+        final TextChannel channel = guildCommand.getGuildChannel();
 
-        List<String> commandArgs = command.getArgs();
+        List<String> commandArgs = guildCommand.getArgs();
         final String commandString = commandArgs.toString();
         final String equation = Utils.formatCommandArgsString(commandString);
         final String regex = "[-.+/*0-9^(sqrt)]+";
         if (!equation.matches(regex)) {
             channel.sendMessage("Sorry, but the expression is wrong.\n" +
-                    "Use **`!help calculate`** for more details on how to use this command.").queue();
+                    "Use **`!help calculate`** for more details on how to use this guildCommand.").queue();
             return;
         }
         Node tree = Node.parse(equation);

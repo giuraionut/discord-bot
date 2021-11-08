@@ -1,13 +1,12 @@
 package com.discordbot.babybot.commands.misc_commands;
 
-import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.GuildCommand;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 
 public class TestCommand implements ICommand {
 
     @Override
-    public void handle(Command command) {
-    }
+    public void handle(GuildCommand guildCommand) {}
 
     @Override
     public String getName() {

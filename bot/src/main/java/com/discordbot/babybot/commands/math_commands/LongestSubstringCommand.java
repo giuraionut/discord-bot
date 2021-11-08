@@ -1,6 +1,6 @@
 package com.discordbot.babybot.commands.math_commands;
 
-import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.GuildCommand;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 import com.discordbot.babybot.utils.Utils;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -12,9 +12,9 @@ import java.util.List;
 
 public class LongestSubstringCommand implements ICommand {
     @Override
-    public void handle(Command command) {
-        TextChannel channel = command.getChannel();
-        List<String> commandArgs = command.getArgs();
+    public void handle(GuildCommand guildCommand) {
+        TextChannel channel = guildCommand.getGuildChannel();
+        List<String> commandArgs = guildCommand.getArgs();
         if (commandArgs.size() == 1 && commandArgs.get(0).equals("last")) {
 
             String lastMessage = channel.getHistory()
@@ -26,7 +26,7 @@ public class LongestSubstringCommand implements ICommand {
             return;
         }
         if (commandArgs.isEmpty()) {
-            channel.sendMessage("You must provide some arguments for this command.\n" +
+            channel.sendMessage("You must provide some arguments for this guildCommand.\n" +
                     "The arguments can be any number or word, sentences, etc").queue();
             return;
         }
@@ -81,7 +81,6 @@ public class LongestSubstringCommand implements ICommand {
             this.content = content;
         }
     }
-
 
     @Override
     public String getName() {

@@ -1,6 +1,6 @@
 package com.discordbot.babybot.commands.music_commands;
 
-import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.GuildCommand;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 import com.discordbot.babybot.music.PlayerManager;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
@@ -14,10 +14,10 @@ import java.net.URISyntaxException;
 
 public class PlayTrackCommand implements ICommand {
     @Override
-    public void handle(Command command) {
-        TextChannel textChannel = command.getChannel();
+    public void handle(GuildCommand guildCommand) {
+        TextChannel textChannel = guildCommand.getGuildChannel();
 
-        String arg = String.join(" ", command.getArgs());
+        String arg = String.join(" ", guildCommand.getArgs());
         if (arg.isBlank()) {
             textChannel.sendMessage("Please tell me, what would you like to listen?\n" +
                     "I can play you a track from a **`youtube link`**.\n" +
@@ -25,7 +25,7 @@ public class PlayTrackCommand implements ICommand {
             return;
         }
 
-        Member member = command.getMember();
+        Member member = guildCommand.getGuildMember();
         GuildVoiceState memberVoiceState = member.getVoiceState();
 
 
@@ -34,9 +34,9 @@ public class PlayTrackCommand implements ICommand {
             return;
         }
 
-        Member bot = command.getSelfMember();
+        Member bot = guildCommand.getGuildSelfMember();
         GuildVoiceState botVoiceState = bot.getVoiceState();
-        AudioManager audioManager = command.getGuild().getAudioManager();
+        AudioManager audioManager = guildCommand.getGuild().getAudioManager();
         VoiceChannel memberVoiceChannel = member.getVoiceState().getChannel();
 
         if (botVoiceState != null && !botVoiceState.inVoiceChannel()) {

@@ -1,6 +1,6 @@
 package com.discordbot.babybot.commands.math_commands;
 
-import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.GuildCommand;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 import net.dv8tion.jda.api.entities.TextChannel;
 
@@ -11,11 +11,11 @@ import java.util.stream.Stream;
 
 public class FibonacciCommand implements ICommand {
     @Override
-    public void handle(Command command) {
-        TextChannel channel = command.getChannel();
+    public void handle(GuildCommand guildCommand) {
+        TextChannel channel = guildCommand.getGuildChannel();
 
         try {
-            String arg = command.getArgs().get(0);
+            String arg = guildCommand.getArgs().get(0);
             int limit = Integer.parseInt(arg);
             if (limit > 20) {
                 limit = 20;
@@ -29,8 +29,6 @@ public class FibonacciCommand implements ICommand {
         } catch (NumberFormatException | IndexOutOfBoundsException ex) {
             channel.sendMessage("Sorry, the argument must be a **`number`**.").queue();
         }
-
-
     }
 
     @Override

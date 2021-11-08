@@ -1,8 +1,11 @@
 package com.discordbot.babybot.commands.command_logic;
+
 import java.util.List;
 
 public interface ICommand {
-    void handle(Command command);
+    default void handle(GuildCommand guildCommand) {}
+
+    default void handle(PrivateCommand privateCommand) {}
 
     String getName();
 

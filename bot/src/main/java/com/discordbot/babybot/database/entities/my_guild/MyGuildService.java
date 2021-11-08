@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class MyGuildService {
-
     @Autowired
     private MyGuildRepository myGuildRepository;
 

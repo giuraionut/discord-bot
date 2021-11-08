@@ -1,6 +1,6 @@
 package com.discordbot.babybot.commands.music_commands;
 
-import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.GuildCommand;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 import com.discordbot.babybot.music.GuildMusicManager;
 import com.discordbot.babybot.music.PlayerManager;
@@ -12,10 +12,10 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 
 public class SkipTrackCommand implements ICommand {
     @Override
-    public void handle(Command command) {
-        TextChannel textChannel = command.getChannel();
+    public void handle(GuildCommand guildCommand) {
+        TextChannel textChannel = guildCommand.getGuildChannel();
 
-        Member member = command.getMember();
+        Member member = guildCommand.getGuildMember();
         GuildVoiceState memberVoiceState = member.getVoiceState();
 
         if (memberVoiceState != null && !memberVoiceState.inVoiceChannel()) {
@@ -23,7 +23,7 @@ public class SkipTrackCommand implements ICommand {
             return;
         }
 
-        Member bot = command.getSelfMember();
+        Member bot = guildCommand.getGuildSelfMember();
         GuildVoiceState botVoiceState = bot.getVoiceState();
         VoiceChannel memberVoiceChannel = member.getVoiceState().getChannel();
 
@@ -36,7 +36,7 @@ public class SkipTrackCommand implements ICommand {
                             "We have to be in the **`same voice channel`** if you want to **`skip a track`**.").queue();
             return;
         }
-        GuildMusicManager guildMusicManager = PlayerManager.getInstance().getGuildMusicManager(command.getGuild());
+        GuildMusicManager guildMusicManager = PlayerManager.getInstance().getGuildMusicManager(guildCommand.getGuild());
         AudioTrack playingTrack = guildMusicManager.trackScheduler.player.getPlayingTrack();
         if (playingTrack == null) {
             textChannel.sendMessage("I'm not playing anything at this moment.").queue();

@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class GuildMemberId implements Serializable {
     @DBRef
     private MyUser myUser;
+
     @DBRef
     private MyGuild myGuild;
 

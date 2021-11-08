@@ -4,11 +4,13 @@ import com.discordbot.babybot.commands.math_commands.CalculateCommand;
 import com.discordbot.babybot.commands.math_commands.FibonacciCommand;
 import com.discordbot.babybot.commands.math_commands.GcdLcmCommand;
 import com.discordbot.babybot.commands.math_commands.LongestSubstringCommand;
-import com.discordbot.babybot.commands.misc_commands.HelpCommand;
+import com.discordbot.babybot.commands.misc_commands.HelpGuildCommand;
 import com.discordbot.babybot.commands.misc_commands.PingCommand;
 import com.discordbot.babybot.commands.misc_commands.TestCommand;
 import com.discordbot.babybot.commands.music_commands.*;
 import com.discordbot.babybot.commands.profile_commands.CardCommand;
+import com.discordbot.babybot.commands.reddit_commands.MessageBot;
+import com.discordbot.babybot.commands.reddit_commands.RandomMeme;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import javax.annotation.Nullable;
@@ -18,14 +20,14 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 
-public class CommandsCollection {
+public class GuildCommandsCollection {
     private final List<ICommand> commandList = new ArrayList<>();
 
-    public CommandsCollection() {
+    public GuildCommandsCollection() {
         //general commands
-        addCommand(new HelpCommand(this));
+        addCommand(new HelpGuildCommand(this));
         addCommand(new PingCommand());
-
+        addCommand(new MessageBot());
         addCommand(new CardCommand());
         //music commands
         addCommand(new PlayTrackCommand());
@@ -40,12 +42,13 @@ public class CommandsCollection {
         addCommand(new LongestSubstringCommand());
         addCommand(new CalculateCommand());
         addCommand(new TestCommand());
-
+        //reddit commands
+        addCommand(new RandomMeme());
     }
 
     private void addCommand(ICommand command) {
         if (this.commandList.contains(command)) {
-            throw new IllegalArgumentException("Command already exists");
+            throw new IllegalArgumentException("GuildCommand already exists");
         }
         commandList.add(command);
     }
@@ -59,7 +62,6 @@ public class CommandsCollection {
         }
         return null;
     }
-
 
     public List<ICommand> getCommandList() {
         return commandList;
@@ -77,8 +79,8 @@ public class CommandsCollection {
         if (iCommand != null) {
             event.getChannel().sendTyping().queue(); // pretend is typing;
             List<String> args = Arrays.asList(array).subList(1, array.length);
-            Command command = new Command(event, args);
-            iCommand.handle(command);
+            GuildCommand guildCommand = new GuildCommand(event, args);
+            iCommand.handle(guildCommand);
         }
     }
 }

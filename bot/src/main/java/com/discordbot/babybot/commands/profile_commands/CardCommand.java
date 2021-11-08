@@ -1,6 +1,6 @@
 package com.discordbot.babybot.commands.profile_commands;
 
-import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.GuildCommand;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 import com.discordbot.babybot.profile_card.ProfileCard;
 import net.dv8tion.jda.api.entities.Guild;
@@ -14,15 +14,15 @@ import java.util.List;
 
 public class CardCommand implements ICommand {
     @Override
-    public void handle(Command command) {
+    public void handle(GuildCommand guildCommand) {
         ProfileCard profileCard = new ProfileCard();
-        User author = command.getAuthor();
-        Guild guild = command.getGuild();
+        User author = guildCommand.getGuildMessageAuthor();
+        Guild guild = guildCommand.getGuild();
 
-        TextChannel channel = command.getChannel();
+        TextChannel channel = guildCommand.getGuildChannel();
         int width;
         try {
-            String arg = command.getArgs().get(0);
+            String arg = guildCommand.getArgs().get(0);
             width = Integer.parseInt(arg);
             if (width > 1000) {
                 width = 1000;

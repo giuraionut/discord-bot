@@ -1,15 +1,15 @@
 package com.discordbot.babybot.commands.misc_commands;
 
-import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.GuildCommand;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 import net.dv8tion.jda.api.JDA;
 
 public class PingCommand implements ICommand {
     @Override
-    public void handle(Command command) {
-        JDA jda = command.getJDA();
+    public void handle(GuildCommand guildCommand) {
+        JDA jda = guildCommand.getJDA();
         jda.getRestPing().queue(
-                (ping) -> command.getChannel()
+                (ping) -> guildCommand.getGuildChannel()
                         .sendMessageFormat("Your *``REST``* ping: %sms\n" +
                                         "Your *``GATEWAY``* ping: %sms",
                                 ping, jda.getGatewayPing()).queue()
@@ -20,7 +20,6 @@ public class PingCommand implements ICommand {
     public String getName() {
         return "ping";
     }
-
 
     @Override
     public String getCategory() {

@@ -1,12 +1,14 @@
 package com.discordbot.babybot.events;
 
-import com.discordbot.babybot.commands.command_logic.CommandsCollection;
+import com.discordbot.babybot.commands.command_logic.GuildCommandsCollection;
+import com.discordbot.babybot.commands.command_logic.PrivateCommandsCollection;
 import com.discordbot.babybot.database.utils.CollectData;
 import lombok.SneakyThrows;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -16,7 +18,8 @@ import java.util.List;
 
 public class EventListener extends ListenerAdapter {
     private static final Logger log = LoggerFactory.getLogger(EventListener.class);
-    private final CommandsCollection fromCollection = new CommandsCollection();
+    private final GuildCommandsCollection guildCommands = new GuildCommandsCollection();
+    private final PrivateCommandsCollection privateCommands = new PrivateCommandsCollection();
     private final CollectData collectData = new CollectData();
 
     @Override
@@ -40,9 +43,23 @@ public class EventListener extends ListenerAdapter {
         String prefix = "!";
         String raw = event.getMessage().getContentRaw();
         if (raw.startsWith(prefix)) {
-            fromCollection.handle(event);
+            guildCommands.handle(event);
 //            new Thread(() ->{
 //            }){{start();}}.join();
+        }
+    }
+
+    @Override
+    public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
+        User user = event.getAuthor();
+        System.out.println(user);
+        if (user.isBot()) {
+            return;
+        }
+        String prefix = "?";
+        String raw = event.getMessage().getContentRaw();
+        if (raw.startsWith(prefix)) {
+            privateCommands.handle(event);
         }
     }
 }

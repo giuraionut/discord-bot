@@ -1,6 +1,6 @@
 package com.discordbot.babybot.commands.math_commands;
 
-import com.discordbot.babybot.commands.command_logic.Command;
+import com.discordbot.babybot.commands.command_logic.GuildCommand;
 import com.discordbot.babybot.commands.command_logic.ICommand;
 import net.dv8tion.jda.api.entities.TextChannel;
 
@@ -11,9 +11,9 @@ import java.util.stream.IntStream;
 
 public class GcdLcmCommand implements ICommand {
     @Override
-    public void handle(Command command) {
-        TextChannel channel = command.getChannel();
-        List<String> commandArgs = command.getArgs();
+    public void handle(GuildCommand guildCommand) {
+        TextChannel channel = guildCommand.getGuildChannel();
+        List<String> commandArgs = guildCommand.getArgs();
         if (commandArgs.size() != 0) {
             try {
                 List<Integer> integerArgs = commandArgs.stream().map(Integer::parseInt).sorted(Integer::compare).collect(Collectors.toList());
@@ -26,7 +26,7 @@ public class GcdLcmCommand implements ICommand {
                 channel.sendMessageFormat("Sorry, but you can't find cmmdc with any other characters than **`numbers`**").queue();
             }
         } else {
-            channel.sendMessage("This command needs some arguments, for example: **`8 4 9 2**`").queue();
+            channel.sendMessage("This guildCommand needs some arguments, for example: **`8 4 9 2**`").queue();
         }
     }
 

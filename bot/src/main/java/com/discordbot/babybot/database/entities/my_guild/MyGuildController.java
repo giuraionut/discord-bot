@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "guild")
 @AllArgsConstructor
 public class MyGuildController {
-
     @Autowired
     private MyGuildService myGuildService;
 

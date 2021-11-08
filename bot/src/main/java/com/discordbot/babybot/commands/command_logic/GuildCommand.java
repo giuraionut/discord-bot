@@ -5,22 +5,22 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.List;
 
-public class Command implements ICommandDiscord {
+public class GuildCommand implements ICommandJDA {
     private final GuildMessageReceivedEvent event;
     private final List<String> args;
 
-    public Command(GuildMessageReceivedEvent event, List<String> args) {
+    public GuildCommand(GuildMessageReceivedEvent event, List<String> args) {
         this.event = event;
         this.args = args;
     }
 
     @Override
     public Guild getGuild() {
-        return this.getEvent().getGuild();
+        return this.getGuildEvent().getGuild();
     }
 
     @Override
-    public GuildMessageReceivedEvent getEvent() {
+    public GuildMessageReceivedEvent getGuildEvent() {
         return this.event;
     }
 
