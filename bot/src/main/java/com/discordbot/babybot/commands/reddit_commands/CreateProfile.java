@@ -47,7 +47,7 @@ public class CreateProfile implements ICommand {
     public String getHelp() {
         return "```\n" +
                 "This command creates a reddit profile for you\n" +
-                "Use it as !reddit_profile scriptUsername scriptSecret user-agent username password " +
+                "Use it as ?reddit_profile scriptUsername scriptSecret user-agent username password " +
                 "You can obtain a scriptUserName and scriptSecret by creating a script on https://www.reddit.com/prefs/apps" +
                 "Your user agent needs to be something unique and identifiable" +
                 "\n```";

@@ -1,5 +1,8 @@
 package com.discordbot.babybot.commands.command_logic;
 
+import com.discordbot.babybot.commands.discord_management.DeleteCategory;
+import com.discordbot.babybot.commands.discord_management.DeleteMessages;
+import com.discordbot.babybot.commands.discord_management.DeleteTextChannel;
 import com.discordbot.babybot.commands.math_commands.CalculateCommand;
 import com.discordbot.babybot.commands.math_commands.FibonacciCommand;
 import com.discordbot.babybot.commands.math_commands.GcdLcmCommand;
@@ -9,6 +12,7 @@ import com.discordbot.babybot.commands.misc_commands.PingCommand;
 import com.discordbot.babybot.commands.misc_commands.TestCommand;
 import com.discordbot.babybot.commands.music_commands.*;
 import com.discordbot.babybot.commands.profile_commands.CardCommand;
+import com.discordbot.babybot.commands.reddit_commands.FetchSavedPost;
 import com.discordbot.babybot.commands.reddit_commands.MessageBot;
 import com.discordbot.babybot.commands.reddit_commands.RandomMeme;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -44,6 +48,12 @@ public class GuildCommandsCollection {
         addCommand(new TestCommand());
         //reddit commands
         addCommand(new RandomMeme());
+        addCommand(new FetchSavedPost());
+
+        //channel commands
+        addCommand(new DeleteMessages());
+        addCommand(new DeleteCategory());
+        addCommand(new DeleteTextChannel());
     }
 
     private void addCommand(ICommand command) {

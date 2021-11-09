@@ -43,23 +43,29 @@ public class EventListener extends ListenerAdapter {
         String prefix = "!";
         String raw = event.getMessage().getContentRaw();
         if (raw.startsWith(prefix)) {
-            guildCommands.handle(event);
-//            new Thread(() ->{
-//            }){{start();}}.join();
+            new Thread(() -> {
+                guildCommands.handle(event);
+            }) {{
+                start();
+            }}.join();
         }
     }
 
+    @SneakyThrows
     @Override
     public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
         User user = event.getAuthor();
-        System.out.println(user);
         if (user.isBot()) {
             return;
         }
         String prefix = "?";
         String raw = event.getMessage().getContentRaw();
         if (raw.startsWith(prefix)) {
-            privateCommands.handle(event);
+            new Thread(() -> {
+                privateCommands.handle(event);
+            }) {{
+                start();
+            }}.join();
         }
     }
 }

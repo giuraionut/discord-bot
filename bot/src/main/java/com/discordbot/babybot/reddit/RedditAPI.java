@@ -103,12 +103,12 @@ public class RedditAPI {
         if (chunks * chunkSize <= 100) {
             RedditRequestResponse savedPosts = selfSavedPosts(chunks * chunkSize, null);
             JsonNode childrens = savedPosts.getData();
-            childrens.forEach(c -> posts.add(new RedditPost().getPostFromNode(c.get("data"))));
+            posts.addAll(new RedditPost().getPostFromNode(childrens));
         } else {
             RedditRequestResponse savedPosts = selfSavedPosts(chunkSize, null);
             JsonNode childrens = savedPosts.getData();
             String after = savedPosts.getAfter();
-            childrens.forEach(c -> posts.add(new RedditPost().getPostFromNode(c.get("data"))));
+            posts.addAll(new RedditPost().getPostFromNode(childrens));
             var chunksObtained = 1;
             var noOfRequests = 1;
             while (!savedPosts.getAfter().equals("null")) {
@@ -128,7 +128,7 @@ public class RedditAPI {
                 savedPosts = selfSavedPosts(chunkSize, after);
                 childrens = savedPosts.getData();
                 after = savedPosts.getAfter();
-                childrens.forEach(c -> posts.add(new RedditPost().getPostFromNode(c.get("data"))));
+                posts.addAll(new RedditPost().getPostFromNode(childrens));
             }
         }
         return posts;
@@ -167,12 +167,12 @@ public class RedditAPI {
         if (chunks * chunkSize <= 100) {
             RedditRequestResponse postsFromSubreddit = getPostsFromSubReddit(subRedditName, chunks * chunkSize, null);
             JsonNode childrens = postsFromSubreddit.getData();
-            childrens.forEach(c -> posts.add(new RedditPost().getPostFromNode(c.get("data"))));
+            posts.addAll(new RedditPost().getPostFromNode(childrens));
         } else {
             RedditRequestResponse postsFromSubreddit = getPostsFromSubReddit(subRedditName, chunkSize, null);
             JsonNode childrens = postsFromSubreddit.getData();
             String after = postsFromSubreddit.getAfter();
-            childrens.forEach(c -> posts.add(new RedditPost().getPostFromNode(c.get("data"))));
+            posts.addAll(new RedditPost().getPostFromNode(childrens));
             var chunksObtained = 1;
             var noOfRequests = 1;
             while (!postsFromSubreddit.getAfter().equals("null")) {
@@ -192,7 +192,7 @@ public class RedditAPI {
                 postsFromSubreddit = getPostsFromSubReddit(subRedditName, chunkSize, after);
                 childrens = postsFromSubreddit.getData();
                 after = postsFromSubreddit.getAfter();
-                childrens.forEach(c -> posts.add(new RedditPost().getPostFromNode(c.get("data"))));
+                posts.addAll(new RedditPost().getPostFromNode(childrens));
             }
         }
         return posts;

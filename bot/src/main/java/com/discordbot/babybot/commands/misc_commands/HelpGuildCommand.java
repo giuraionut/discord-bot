@@ -28,7 +28,7 @@ public class HelpGuildCommand implements ICommand {
         if (commandArgs.isEmpty()) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setAuthor(selfUser.getName() + " - help").setThumbnail(selfUser.getAvatarUrl())
-                    .setDescription("This is the list of all commands that you can currently use.")
+                    .setDescription("This is the list of all guild commands that you can currently use.")
                     .setColor(Utils.randomColor());
 
             List<ICommand> commandList = guildCommandsCollection.getCommandList();
@@ -48,7 +48,7 @@ public class HelpGuildCommand implements ICommand {
                                     .replace("]", "")
                                     .replace(",", "\n"), true));
 
-            embedBuilder.setFooter("You can type !help command_name for more details about any guildCommand");
+            embedBuilder.setFooter("You can type !help command_name for more details about any guild command");
             channel.sendMessageEmbeds(embedBuilder.build()).queue();
             return;
         }
@@ -57,11 +57,11 @@ public class HelpGuildCommand implements ICommand {
         ICommand iCommand = guildCommandsCollection.getCommand(input);
 
         if (iCommand == null) {
-            channel.sendMessageFormat("Sorry, I don't recognize the **`%s`** guildCommand, can you try another one?", input).queue();
+            channel.sendMessageFormat("Sorry, I don't recognize the **`%s`** guild command, can you try another one?", input).queue();
             return;
         }
         if (iCommand.getHelp() == null) {
-            channel.sendMessage("Right now I don't know what this guildCommand is doing, check later.").queue();
+            channel.sendMessage("Right now I don't know what this guild command is doing, check later.").queue();
             return;
         }
         channel.sendMessage(iCommand.getHelp()).queue();
@@ -90,8 +90,8 @@ public class HelpGuildCommand implements ICommand {
     @Override
     public String getHelp() {
         return "```\n" +
-                "This command returns all the available commands if you use it as: !help\n" +
-                "If you use this command as : !help command_name, you can get more info about any command" +
+                "This command returns all the available guild commands if you use it as: !help\n" +
+                "If you use this command as : !help command_name, you can get more info about any guild command" +
                 "\n```";
     }
 }
