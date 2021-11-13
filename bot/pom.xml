@@ -12,7 +12,7 @@
     <groupId>com.discordbot</groupId>
     <artifactId>babybot</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>v1.0</version>
     <name>babybot</name>
     <description>JDA Discord Bot with Spring.</description>
 

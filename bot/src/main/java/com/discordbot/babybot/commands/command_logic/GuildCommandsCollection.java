@@ -66,7 +66,7 @@ public class GuildCommandsCollection {
     @Nullable
     public ICommand getCommand(String input) {
         for (ICommand command : this.commandList) {
-            if (command.getName().equals(input.toLowerCase()) | command.getAliases().contains(input.toLowerCase())) {
+            if (command.getName().equals(input.toLowerCase()) || command.getAliases().contains(input.toLowerCase())) {
                 return command;
             }
         }
@@ -77,17 +77,17 @@ public class GuildCommandsCollection {
         return commandList;
     }
 
-    public void handle(GuildMessageReceivedEvent event) {
-        String PREFIX = "!";
+    public void handle(GuildMessageReceivedEvent event) throws InterruptedException {
+        String prefix = "!";
         String[] array = event.getMessage()
                 .getContentRaw()
-                .replaceFirst("(?i)" + Pattern.quote(PREFIX), "")
+                .replaceFirst("(?i)" + Pattern.quote(prefix), "")
                 .split("\\s");
         String commandString = array[0].toLowerCase();
         ICommand iCommand = getCommand(commandString);
 
         if (iCommand != null) {
-            event.getChannel().sendTyping().queue(); // pretend is typing;
+            event.getChannel().sendTyping().queue();
             List<String> args = Arrays.asList(array).subList(1, array.length);
             GuildCommand guildCommand = new GuildCommand(event, args);
             iCommand.handle(guildCommand);

@@ -22,14 +22,13 @@ public class EventListener extends ListenerAdapter {
     private final PrivateCommandsCollection privateCommands = new PrivateCommandsCollection();
     private final CollectData collectData = new CollectData();
 
+
     @Override
     public void onReady(@NotNull ReadyEvent event) {
         log.info("{} is online", event.getJDA().getSelfUser());
         List<Guild> guilds = event.getJDA().getGuilds();
 
-        new Thread(() -> {
-            collectData.collect(guilds);
-        }).start();
+        new Thread(() -> collectData.collect(guilds)).start();
     }
 
     @SneakyThrows
@@ -44,10 +43,13 @@ public class EventListener extends ListenerAdapter {
         String raw = event.getMessage().getContentRaw();
         if (raw.startsWith(prefix)) {
             new Thread(() -> {
-                guildCommands.handle(event);
-            }) {{
-                start();
-            }}.join();
+                try {
+                    guildCommands.handle(event);
+                } catch (InterruptedException e) {
+                    log.trace("On guild command received thread", e);
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
         }
     }
 
@@ -61,11 +63,7 @@ public class EventListener extends ListenerAdapter {
         String prefix = "?";
         String raw = event.getMessage().getContentRaw();
         if (raw.startsWith(prefix)) {
-            new Thread(() -> {
-                privateCommands.handle(event);
-            }) {{
-                start();
-            }}.join();
+            new Thread(() -> privateCommands.handle(event)).start();
         }
     }
 }

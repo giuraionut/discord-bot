@@ -18,7 +18,6 @@ public class DeleteCategory implements ICommand {
 
         final User guildMessageAuthor = guildCommand.getGuildMessageAuthor();
         final Member owner = guildCommand.getGuild().getOwner();
-
         if (owner == null) {
             guildChannel.sendMessage("You can't use this command").queue();
             return;
@@ -38,7 +37,7 @@ public class DeleteCategory implements ICommand {
         final List<Category> categories = guildCommand.getGuild()
                 .getCategories()
                 .stream().filter(category -> category.getName().equals(categoryName))
-                .collect(Collectors.toList());
+                .toList();
         if (categories.isEmpty()) {
             guildChannel.sendMessage("Sorry, but category " + categoryName + " does not exists!").queue();
             return;
@@ -56,12 +55,12 @@ public class DeleteCategory implements ICommand {
 
     @Override
     public String getHelp() {
-        return "```\n" +
-                "This command is used to delete CATEGORIES AND TEXT CHANNELS INSIDE THEM\n" +
-                "BE CAREFUL WHILE USING THIS COMMAND\n\n" +
-                "Use it as following:\n" +
-                "-delete_category my_category -> deletes my_category and all text channels inside it\n" +
-                "\n```";
+        return """
+                This command is used to delete CATEGORIES AND TEXT CHANNELS INSIDE THEM
+                BE CAREFUL WHILE USING THIS COMMAND
+                Use it as following:
+                -delete_category my_category -> deletes my_category and all text channels inside it
+                """;
     }
 
     @Override
