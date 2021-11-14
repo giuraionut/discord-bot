@@ -1,6 +1,11 @@
 # Discord Bot
+<p align = "center">
+<img src = "https://img.shields.io/badge/JAVA-blue">
+<img src = "https://img.shields.io/badge/SPRING BOOT-green">
+<img src = "https://img.shields.io/badge/JDA-purple">
+<img src = "https://img.shields.io/badge/MONGO DB-green">
+</p>
 Discord bot made with [JDA](https://github.com/DV8FromTheWorld/JDA), Spring and MongoDB database.
-
 
 ## Features
 ---
